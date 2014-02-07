@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="lib/crafty-min.js"></script>
+<script src="src/game.js"></script>
+<script src="src/components.js"></script>
+<script src="src/scenes.js"></script>
+<script>
+function onChange(dropdown)
+{
+	var prof = dropdown.options[dropdown.selectedIndex].value;
+	window.prof = prof;
+	var form = document.getElementById('form')
+	form.removeChild(dropdown);
+    Game.start();
+	
+}
+
+</script>
+</head>
+<body>
+<form id='form'>
+<select name='select' onchange='onChange(this.form.select);'>
+<option value= " "></option>
+<option value= "assets/teate.jpg">Teate</option>
+<option value= "assets/benton.jpg">Benton</option>
+<option value= "assets/rad.jpg">Radziwill</option>
+<option value= "assets/anne.jpg">Henriksen</option>
+<option value= "assets/altaii.jpg">Altaii</option>
+</select>
+</form>
+</body>
+</html>
