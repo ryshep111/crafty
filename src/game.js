@@ -21,12 +21,17 @@ height: function() {
 return this.map_grid.height * this.map_grid.tile.height;
 },
 
-shoot: true, 
+shoot: true,
+pause: false,
+level: 1, 
 // Initialize and start our game
 start: function() {
 
-// Start crafty and set a background color so that we can see it's working
+// Start crafty 
 Crafty.init(Game.width(), Game.height());
+
+//Crafty.timer.FPS(100);
+
  // Simply start the "Loading" scene to get things going
 Crafty.scene('Loading' );
 
@@ -34,4 +39,4 @@ Crafty.scene('Loading' );
 }
 }
 
-$text_css = { 'font-size': '24px', 'font-family': 'Arial', 'color': 'white', 'text-align': 'center' };
+$text_css = { 'size': '40px', 'family': 'Arial'};

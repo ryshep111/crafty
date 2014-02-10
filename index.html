@@ -6,28 +6,49 @@
 <script src="src/components.js"></script>
 <script src="src/scenes.js"></script>
 <script>
-function onChange(dropdown)
+
+function onClick(prof)
 {
-	var prof = dropdown.options[dropdown.selectedIndex].value;
-	window.prof = prof;
-	var form = document.getElementById('form')
-	form.removeChild(dropdown);
-    Game.start();
-	
+	console.log(prof);
+	window.prof = prof.value;
+	var table = document.getElementById('table');
+	var div = document.getElementById('div');
+	document.body.removeChild(table);
+	document.body.removeChild(div);
+	Game.start();
+}
+function playMusic()
+{
+	Crafty.load(['assets/finalD.mp3'],
+	function(){
+		Crafty.audio.add({
+		background: [ 'assets/finalD.mp3']
+		})
+		Crafty.audio.play('background', -1);
+	});
 }
 
+window.addEventListener('load', playMusic());
 </script>
 </head>
 <body>
-<form id='form'>
-<select name='select' onchange='onChange(this.form.select);'>
-<option value= " "></option>
-<option value= "assets/teate.jpg">Teate</option>
-<option value= "assets/benton.jpg">Benton</option>
-<option value= "assets/rad.jpg">Radziwill</option>
-<option value= "assets/anne.jpg">Henriksen</option>
-<option value= "assets/altaii.jpg">Altaii</option>
-</select>
-</form>
+<div id= 'div' align= 'center'>
+<img src= "assets/Aced.png">
+</div>
+<table id= "table" align= "center">
+<tr>
+<td><button value = "assets/teate.jpg" onclick= "onClick(this)"><img src = "assets/teate.jpg"></button></td>
+<td><button value = "assets/benton.jpg" onclick= "onClick(this)"><img src = "assets/benton.jpg"></button></td>
+<td><button value = "assets/rad.jpg" onclick= "onClick(this)"><img src = "assets/rad.jpg"></button></td>
+<td><button value = "assets/anne.jpg" onclick= "onClick(this)"><img src = "assets/anne.jpg"></button></td>
+<td><button value = "assets/altaii.jpg" onclick= "onClick(this)"><img src = "assets/altaii.jpg"></button></td>
+</tr>
+<tr>
+<td colspan = 5 align = 'center'>Move with the Arrow Keys</td>
+</tr>
+<tr>
+<td colspan = 5 align = 'center'>Shoot with the Mouse Button</td>
+</tr>
+</table>
 </body>
 </html>
