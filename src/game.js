@@ -20,7 +20,13 @@ return this.map_grid.width * this.map_grid.tile.width;
 height: function() {
 return this.map_grid.height * this.map_grid.tile.height;
 },
-
+score: 0,
+prof: "Benton",
+healthBoost: 1, //for player
+speedBoost: 1,
+healthMultiplier: 1, //for professor
+speedMultiplier: 1,
+frMultiplier: 1,
 shoot: true,
 pause: false,
 level: 1, 

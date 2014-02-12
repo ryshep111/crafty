@@ -1,3 +1,4 @@
+
 // The Grid component allows an element to be located
 // on a grid of tiles
 Crafty.c('Grid', {
@@ -5,7 +6,7 @@ init: function() {
 this.attr({
 //w: Game.map_grid.tile.width,
 //h: Game.map_grid.tile.height,
-z: 2
+
 })
 },
  
@@ -25,6 +26,7 @@ return this;
 Crafty.c('Actor', {
 init: function() {
 this.requires('2D, Canvas, Grid');
+
 },
 });
 
@@ -32,31 +34,39 @@ Crafty.c('Prof', {
 
 init: function() {
 
-this.requires('Actor, Collision, spr_prof, Tween');
-
-this.velX = 5;  // 5 pixels per frame
-this.velY = 2;
+this.requires('Actor, Collision, Tween');
+this.addComponent(Game.prof);
+this.velX = 5 * Game.speedMultiplier;  // 5 pixels per frame
+this.velY = 2 * Game.speedMultiplier;
 this.leftBorder = 0;
 this.rightBorder = Crafty.viewport.width;
-this.grade = "f"
+this.grade = "f";
 
-	if (Game.level == 1 || Game.level == 3)
-	{
-	this.bind("EnterFrame", this.doMotion);
-	}
-	else if (Game.level == 2)
+	if (Game.level >= 4)
 	{
 	this.bind("EnterFrame", this.doMotion2);
 	}
+	else 
+	{
+	this.bind("EnterFrame", this.doMotion);
+	}
+
+this.displayHealth= Crafty.e('2D, DOM, Text')
+.attr({ x: 0, y: 0})
+.textFont({size: '20px'})
+.textColor("#FFCC33");
+
 this.bind("EnterFrame", this.pausePlay);
 this.onHit('bullet', function(data) {
+Game.score+= 10;
 this.health -= 10;
 bullet = data[0].obj;
 bullet.destroy();
 Game.shoot = true;
 });
-this.initHealth = 200;
+this.initHealth = 300 * Game.healthMultiplier;
 this.health = this.initHealth;
+
 	},
 
 doMotion: function(frameData){
@@ -98,12 +108,12 @@ doMotion2: function(frameData)
 
 pausePlay: function()
 {
-	if (this.health == this.initHealth/2)
+	if (this.health <= this.initHealth/2)
 	{
 		this.health -= 10;
 		Game.pause = true;
 		this.grade = "c";
-		if (Game.level == 2)
+		if (Game.level >= 4)
 		{
 			this.unbind("EnterFrame", this.doMotion2);
 		}
@@ -116,7 +126,7 @@ pausePlay: function()
 		this.origin("center");
 		this.tween({rotation: 360}, 2000);
 		this.timeout(function(){
-		if (Game.level == 2)
+		if (Game.level >= 4)
 		{
 			this.bind("EnterFrame", this.doMotion2);
 		}
@@ -126,6 +136,7 @@ pausePlay: function()
 		}
 			Game.pause = false;
 		}, 2000);
+		this.unbind("EnterFrame", this.pausePlay);
 	}
 		//Crafty("bullet").each(function() { this.destroy(); });
 	
@@ -148,7 +159,7 @@ this.gravity();
 
 
 gone: function() {
-if (this.y > Crafty.viewport.height)
+if (this.y + this.h > Crafty.viewport.height)
 
 this.destroy();} 
 });
@@ -157,9 +168,10 @@ Crafty.c('A', {
 
 init: function() {
 
-this.requires('Actor, Gravity, spr_a');
+this.requires('Actor, Gravity, spr_a, Collision');
 this.gravity();
-this.gravityConst(0.1);
+this.gravityConst(0.15);
+
 },
 })
 
@@ -168,25 +180,40 @@ Crafty.c('Player', {
 init: function() {
 
 this.requires('Actor, Collision, Twoway, spr_player, Tween')
-.twoway(10, 0)
-.onHit('Grade', function() {
-
+.twoway(10 * Game.speedBoost, 0)
+.onHit('Grade', function(data) {
+ grade = data[0].obj;
+ grade.destroy();
 this.health -= 10
 	
-	if (this.health === 0) 
+	if (this.health <= 0)
 	{
-	
 	Crafty.removeEvent(this, Crafty.stage.elem, "mousedown", this.shoot);
-	this.removeComponent('Twoway');
-	Crafty.audio.stop('background');
-	Crafty.audio.play('gameover');
-	this.tween({alpha: 0.0}, 1000);
-	this.timeout(function(){ Crafty.scene('GameOver')}, 2000);	
+	Crafty.audio.stop("background");
+	Crafty.audio.play('explosion');
 	}
 });
-this.health = 30;
-this.bind("EnterFrame", this.stopAtEdge);
+this.health = 30 * Game.healthBoost;
 
+this.displayHealth= Crafty.e('2D, DOM, Text')
+.attr({ x: Crafty.viewport.width - 65, y: 0})
+.textFont({size: '20px'})
+.textColor("#FFCC33");
+	
+this.bind("EnterFrame", this.stopAtEdge);
+this.onHit('A', function (data){
+	
+	if (Math.random() < 0.5)
+	{
+		Game.healthBoost += 0.25;
+		this.message = "Health Boost!";
+	}
+	else
+	{
+		Game.speedBoost += 0.05;
+		this.message = "Speed Boost!";
+	}
+})
 },
 stopAtEdge: function() {
 	if (this.x + this.w > Crafty.viewport.width)
@@ -225,23 +252,28 @@ this.y -= this.v;
 }
 });
 
-Crafty.c('star', {
+
+Crafty.c('message', {
 
 init: function() {
-this.requires('Gravity, Actor, spr_star');
-this.gravityConst(0.05);
-this.z = 1;
-this.gravity();
-this.bind("EnterFrame", this.gone);
-},
 
-gone: function() {
-if (this.y > Crafty.viewport.height)
-{
-this.destroy();
-} 
+this.requires('2D, DOM, Text')
+.attr({ x: 0, y: Game.height()/2 - 40, w: Game.width() })
+.textFont($text_css)
+.css("text-align", "center");
+
 }
 });
+
+Crafty.c('displayProf', {
+
+init: function() {
+this.requires('Actor')
+this.addComponent(Game.prof);
+
+}
+});
+
 
 
 
