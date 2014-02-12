@@ -529,8 +529,8 @@ setTimeout(function() { delay = false; }, 2000);
 
 this.bind('KeyDown', function() {
     if (!delay){
-
-	Crafty.scene('Level'+Game.level);
+	Game.score = 0;
+	Crafty.scene('Level1');
 	}
 });
 },
