@@ -52,6 +52,7 @@ spr_bullet: [0, 0, 1, 1]
 Crafty.audio.add({
 
 explosion: [ 'assets/explosion.mp3' ],
+
 });
 
 Crafty.background('url(assets/space.gif)');
@@ -520,19 +521,36 @@ setTimeout(function(){Crafty.scene("Level"+ Game.level)}, 3000);
 Crafty.scene("GameOver", function ()
 {
 
-Crafty.e('message')
-		.text('You flunked out! <br>' + 'Your Score was: ' + Game.score + '<br>Press any key to play again')
+var message = Crafty.e('message')
 		.textColor('#FF0000');
-		
 var delay = true;
 setTimeout(function() { delay = false; }, 2000);
 
-this.bind('KeyDown', function() {
-    if (!delay){
-	Game.score = 0;
-	Crafty.scene('Level1');
-	}
-});
+if (window.score < Game.score)
+{
+	message.text('You flunked out! <br>' + 'New High Score = ' + Game.score + '<br>Press any key submit your score');
+
+		this.bind('KeyDown', function() {
+		newHighScore();
+		});
+	
+}
+else	
+{
+	message.text('You flunked out! <br>' + 'Your Score was: ' + Game.score + '<br>Press any key to play again')
+	this.bind('KeyDown', function() {
+		if (!delay){
+		Game.score = 0;
+		Game.healthMultiplier = 1;
+		Game.frMultiplier = 1;
+		Game.speedMultiplier = 1;
+		Game.healthBoost = 1;
+		Game.speedBoost = 1;
+		Game.prof = "Benton";
+		Crafty.scene('Level1');
+		}
+	});
+}
 },
 function() {
 this.unbind('KeyDown');

@@ -30,6 +30,7 @@ frMultiplier: 1,
 shoot: true,
 pause: false,
 level: 1, 
+
 // Initialize and start our game
 start: function() {
 
