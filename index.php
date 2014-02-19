@@ -43,24 +43,18 @@ window.addEventListener('load', playMusic());
 <body>
 <?php
 function getScore() {
-if(isset($_POST ['score']))
-{
-$score = $_POST ['score'];
-$f = fopen("C:/xampp/htdocs/crafty/HighScore.txt", "w");
-
-fwrite( $f, $score );
-fclose($f);
-return $score;
-}
-
-
-else
-{
-$f = fopen("C:/xampp/htdocs/crafty/HighScore.txt", "r");
-$score = (int)fgets($f); 
-fclose($f);
-return $score;
-}
+	if(isset($_POST ['score'])){
+		$score = $_POST ['score'];
+		$f = fopen("HighScore.txt", "w");
+		fwrite( $f, $score );
+		fclose($f);
+		return $score;
+	} else {
+		$f = fopen("HighScore.txt", "r");
+		$score = (int)fgets($f); 
+		fclose($f);
+		return $score;
+	}
 }
 ?>
 <div id= 'div' align= 'center'>
