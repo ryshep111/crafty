@@ -193,7 +193,7 @@ this.health -= 10
 	Crafty.audio.play('explosion');
 	}
 });
-this.health = 30 * Game.healthBoost;
+this.health = 10 * Game.healthBoost;
 
 this.displayHealth= Crafty.e('2D, DOM, Text')
 .attr({ x: Crafty.viewport.width - 65, y: 0})
@@ -205,7 +205,7 @@ this.onHit('A', function (data){
 	
 	if (Math.random() < 0.5)
 	{
-		Game.healthBoost += 0.25;
+		Game.healthBoost += 0.5;
 		this.message = "Health Boost!";
 	}
 	else
