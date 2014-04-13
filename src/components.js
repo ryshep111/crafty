@@ -189,7 +189,7 @@ this.health -= 10
 	if (this.health <= 0)
 	{
 	Crafty.removeEvent(this, Crafty.stage.elem, "mousedown", this.shoot);
-	Crafty.audio.stop("background");
+	//Crafty.audio.stop("background");
 	Crafty.audio.play('explosion');
 	}
 });

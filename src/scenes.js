@@ -72,7 +72,7 @@ Crafty.scene('GetReady');
 
 Crafty.scene('Level1', function() {
 
-Crafty.audio.play("background", -1);
+//Crafty.audio.play("background", -1);
 
 
 
@@ -102,7 +102,7 @@ professor.bind("EnterFrame", function(){
 	.at(professor._x, professor._y)
 	.attr({ w: Game.map_grid.tile.width * 5, h: Game.map_grid.tile.height * 5});
 	
-	Crafty.audio.stop("background");
+	//Crafty.audio.stop("background");
 	Crafty.audio.play('explosion');
 	
 	Crafty.e('A')
@@ -168,7 +168,7 @@ Crafty.addEvent(player, Crafty.stage.elem, "mousedown", player.shoot);
 Crafty.scene('Level2', function() {
 
 
-Crafty.audio.play("background", -1);
+//Crafty.audio.play("background", -1);
 var professor = Crafty.e('Prof')
 .at(Crafty.viewport.width/2 - 40, 0);
 professor.bind("EnterFrame", function(){
@@ -195,7 +195,7 @@ professor.bind("EnterFrame", function(){
 	.at(professor._x, professor._y)
 	.attr({ w: Game.map_grid.tile.width * 5, h: Game.map_grid.tile.height * 5});
 	
-	Crafty.audio.stop("background");
+	//Crafty.audio.stop("background");
 	Crafty.audio.play('explosion');
 	
 	Crafty.e('A')
@@ -261,7 +261,7 @@ Crafty.scene('Level3', function() {
 
 
 
-Crafty.audio.play("background", -1);
+//Crafty.audio.play("background", -1);
 var professor = Crafty.e('Prof')
 .at(Crafty.viewport.width/2 - 40, 0);
 professor.bind("EnterFrame", function(){
@@ -289,7 +289,7 @@ professor.bind("EnterFrame", function(){
 	.at(professor._x, professor._y)
 	.attr({ w: Game.map_grid.tile.width * 5, h: Game.map_grid.tile.height * 5});
 	
-	Crafty.audio.stop("background");
+	//Crafty.audio.stop("background");
 	Crafty.audio.play('explosion');
 	
 	Crafty.removeEvent(player, Crafty.stage.elem, "mousedown", player.shoot);
@@ -352,7 +352,7 @@ Crafty.addEvent(player, Crafty.stage.elem, "mousedown", player.shoot);
 Crafty.scene('Level4', function() {
 
 
-Crafty.audio.play("background", -1);
+//Crafty.audio.play("background", -1);
 var professor = Crafty.e('Prof')
 .at(Crafty.viewport.width/2 - 40, 0);
 professor.bind("EnterFrame", function(){
@@ -379,7 +379,7 @@ professor.bind("EnterFrame", function(){
 	.at(professor._x, professor._y)
 	.attr({ w: Game.map_grid.tile.width * 5, h: Game.map_grid.tile.height * 5});
 	
-	Crafty.audio.stop("background");
+	//Crafty.audio.stop("background");
 	Crafty.audio.play('explosion');
 	
 	Crafty.e('A')
@@ -444,7 +444,7 @@ Crafty.addEvent(player, Crafty.stage.elem, "mousedown", player.shoot);
 Crafty.scene('Level5', function() {
 
 var rand;
-Crafty.audio.play("background", -1);
+//Crafty.audio.play("background", -1);
 var professor = Crafty.e('Prof')
 .at(Crafty.viewport.width/2 - 40, 0);
 professor.bind("EnterFrame", function(){
